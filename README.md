@@ -1,7 +1,7 @@
 # Documentation used
 https://reactjs.org/tutorial/tutorial.html
 https://scrimba.com/learn/reactgame/bonus-implement-time-travel-cBLr6Df6
-
+https://www.digitalocean.com/community/tutorials/build-a-to-do-application-using-django-and-react
 
 # Getting Started with Create React App
 

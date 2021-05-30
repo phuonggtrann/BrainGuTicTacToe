@@ -1,8 +1,8 @@
 import React from 'react';
 
 const styling = {
-    background: 'lightblue',
-    borde: '2pc solid darkblue',
+    background: 'lightpink',
+    borde: '2pc solid black',
     fontSize: '30px',
     fontWeight: '800',
     cursor: 'pointer', 

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { calculateWinner } from '../winner'
 import Axios from 'axios'
 import Board from './Boards'
+import Plot from 'react-plotly.js';
 
 const styles = {
   width: '200px',
   margin: '20px auto'
 }
-
 const Game = () => {
   const [history, setHistory] = useState([Array(9).fill(null)])
   const [stepNumber, setStepNumber] = useState(0)
@@ -24,7 +24,7 @@ const Game = () => {
   useEffect(() => {
     Axios
         .get("/api/users/")
-        .then((res) =>setPlayers(res.data))
+        .then((res) => setPlayers(res.data))
         .catch(err => console.log(err))
     if (winner) {
       switch (winner) {
@@ -76,6 +76,7 @@ const Game = () => {
           break
         default:
           break
+
       }
 
     }
@@ -133,8 +134,6 @@ const Game = () => {
       tempID[parseInt(e.target.name)]= e.target.getAttribute('unique_id')
       tempScore[parseInt(e.target.name)]= e.target.getAttribute('score')
       tempGame[parseInt(e.target.name)]= e.target.getAttribute('total_game_play')
-      console.log(tempPlayer)
-      console.log(tempID)
       setPlayerIDs(tempID)
       setPlayerNames(tempPlayer)
   }
@@ -152,31 +151,49 @@ const Game = () => {
   )
 
   return (
-    <>
-    
-      <div>Select Player 1's name</div>
-            {players.map((player)=>{
+    <div style = {
+      {
+        backgroundColor: 'lightblue',
+        }}>
+      
+      <h3>Select Player 1's name</h3>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '10px'
+      }}> 
+        {players.map((player)=>{
                 return(
-                    <button name='0' key={player.id} unique_id={player.id} score={player.score} total_game_play={player.total_game_play} onClick={(e)=>onSelectPlayer(e)}>
+                    <button style={{margin:'5px', width: '40%'}} name='0' key={player.id} unique_id={player.id} score={player.score} total_game_play={player.total_game_play} onClick={(e)=>onSelectPlayer(e)}>
                         {player.username}
                     </button>
                   )
             })}
-      <div>Select Player 2's name</div>
+      </div>
+            
+      <h3>Select Player 2's name</h3>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '10px'
+      }}> 
             {players.map((player)=>{
                 return(
-                    <button name='1' key={player.id} unique_id={player.id} score={player.score} total_game_play={player.total_game_play} onClick={(e)=>onSelectPlayer(e)}>
+                    <button style={{margin:'5px', width:'40%'}}name='1' key={player.id} unique_id={player.id} score={player.score} total_game_play={player.total_game_play} onClick={(e)=>onSelectPlayer(e)}>
                         {player.username}
                     </button>
                   )
             })}
+        </div>
       <br></br>
+      <h3>Create New Player:</h3>
       <button onClick={()=> setCreateNewPlayer(true)}>Create new Player</button>
       {createNewPlayer? 
       <>
         <div>Enter new Player name</div>
         <input name='2' onChange={(e) => setPlayerName(e)} />
         <button onClick={submitNewPlayer}>Submit</button>
+        
       </>
       :
       <></>}
@@ -189,22 +206,26 @@ const Game = () => {
             {renderMoves()}
             </div>
             <button onClick={resetGame}>Reset Game</button>
-            <div>leaderboard</div>
+            <div>Leaderboard</div>
       </>
         :
         <> 
-            <div>Please enter name</div>
-            <button onClick={checkNameSet}>Submit</button>
+            <div>
+              <p>OR</p>
+              <button onClick={checkNameSet}>Start Playing</button>
+            </div>
+            
         </>
     }
+    <h3 style={{margin:'10px'}}>Leaderboard</h3>
       {players.map((player)=>{
                 return(
-                    <div key={player.id}>
+                    <h4 style={{margin: '6px'}} key={player.id}>
                         {player.username} : {player.score}
-                    </div>
+                    </h4>
                   )
             })}
-    </>
+    </div>
   )
 }
 
